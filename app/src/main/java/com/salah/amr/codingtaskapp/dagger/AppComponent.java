@@ -14,5 +14,6 @@ import dagger.Component;
 @Component(modules = {NetModule.class , AppModule.class})
 public interface AppComponent {
 
+    ControllerComponent newControllerComponent(ControllerModule module);
     void inject(MyApp target);
 }

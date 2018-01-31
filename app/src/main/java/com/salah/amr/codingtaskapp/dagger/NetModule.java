@@ -1,5 +1,6 @@
 package com.salah.amr.codingtaskapp.dagger;
 
+import com.salah.amr.codingtaskapp.model.FeedAPI;
 import com.salah.amr.codingtaskapp.model.OpenWeatherAPI;
 
 import javax.inject.Singleton;
@@ -20,7 +21,7 @@ public class NetModule {
     @Provides
     Retrofit provideRetrofit(GsonConverterFactory gson , RxJava2CallAdapterFactory rxJava){
         return  new Retrofit.Builder()
-                .baseUrl(OpenWeatherAPI.BASE_URL)
+                .baseUrl(FeedAPI.BASE_URL)
                 .addConverterFactory(gson)
                 .addCallAdapterFactory(rxJava)
                 .build();
@@ -41,8 +42,14 @@ public class NetModule {
 
     @Provides
     @Singleton
-    OpenWeatherAPI provideOpenWeatherAPI(Retrofit retrofit){
-        return retrofit.create(OpenWeatherAPI.class);
+    FeedAPI provideFeedAPI(Retrofit retrofit){
+        return retrofit.create(FeedAPI.class);
+    }
+
+    @Provides
+    @Singleton
+    OpenWeatherAPI provideOpenWeatherAPI(FeedAPI feedAPI){
+        return new OpenWeatherAPI(feedAPI);
     }
 
 }
