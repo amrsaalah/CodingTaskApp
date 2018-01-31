@@ -1,6 +1,12 @@
-package com.salah.amr.codingtaskapp.model.weather;
+package com.salah.amr.codingtaskapp.model;
+
+import android.arch.persistence.room.Entity;
 
 import com.google.gson.annotations.SerializedName;
+import com.salah.amr.codingtaskapp.model.weather.City;
+import com.salah.amr.codingtaskapp.model.weather.ForecastList;
+import com.salah.amr.codingtaskapp.model.weather.Main;
+import com.salah.amr.codingtaskapp.model.weather.Weather;
 
 import java.util.Arrays;
 

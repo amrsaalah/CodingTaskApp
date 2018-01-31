@@ -1,7 +1,5 @@
 package com.salah.amr.codingtaskapp.model;
 
-import com.salah.amr.codingtaskapp.model.weather.WeatherModel;
-
 import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
