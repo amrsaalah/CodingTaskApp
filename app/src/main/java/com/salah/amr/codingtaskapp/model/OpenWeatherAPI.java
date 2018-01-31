@@ -28,12 +28,16 @@ public class OpenWeatherAPI {
         this.feedAPI = feedAPI;
     }
 
-    public void getCurrentWeather(SingleObserver<WeatherModel> consumer, String name) {
+    public Single<Double> getCurrentWeather(String name) {
         Log.d(TAG, "getCurrentWeather: ");
-        feedAPI.getCurrentWeatherByName(name)
+        return feedAPI.getCurrentWeatherByName(name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(consumer);
+                .flatMap(weatherModel -> {
+                   Double currentTemp;
+                   currentTemp = weatherModel.getMain().getTemp();
+                   return Single.just(currentTemp);
+                });
     }
 
     public Single<List<Double>> getForecast(String name) {

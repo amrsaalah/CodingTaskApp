@@ -6,7 +6,6 @@ package com.salah.amr.codingtaskapp.model.weather;
 
 public class ForecastList {
     Main main;
-    Weather [] weather;
 
     public Main getMain() {
         return main;
@@ -14,13 +13,5 @@ public class ForecastList {
 
     public void setMain(Main main) {
         this.main = main;
-    }
-
-    public Weather[] getWeather() {
-        return weather;
-    }
-
-    public void setWeather(Weather[] weather) {
-        this.weather = weather;
     }
 }

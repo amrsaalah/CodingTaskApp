@@ -1,12 +1,9 @@
 package com.salah.amr.codingtaskapp.model;
 
-import android.arch.persistence.room.Entity;
-
 import com.google.gson.annotations.SerializedName;
 import com.salah.amr.codingtaskapp.model.weather.City;
 import com.salah.amr.codingtaskapp.model.weather.ForecastList;
 import com.salah.amr.codingtaskapp.model.weather.Main;
-import com.salah.amr.codingtaskapp.model.weather.Weather;
 
 import java.util.Arrays;
 
@@ -17,7 +14,6 @@ import java.util.Arrays;
 public class WeatherModel {
     private String name;
     private Main main;
-    private Weather[] weather;
     private City city;
     @SerializedName("list")
     private ForecastList[] forecastList;
@@ -55,20 +51,12 @@ public class WeatherModel {
         this.main = main;
     }
 
-    public Weather[] getWeather() {
-        return weather;
-    }
-
-    public void setWeather(Weather[] weather) {
-        this.weather = weather;
-    }
 
     @Override
     public String toString() {
         return "WeatherModel{" +
                 "name='" + name + '\'' +
                 ", main=" + main +
-                ", weather=" + Arrays.toString(weather) +
                 ", city=" + city +
                 ", forecastList=" + Arrays.toString(forecastList) +
                 '}';

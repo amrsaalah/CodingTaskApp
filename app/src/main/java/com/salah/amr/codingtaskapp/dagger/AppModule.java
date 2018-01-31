@@ -13,7 +13,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by user on 1/31/2018.
+ * Created by Amr Salah on 1/31/2018.
  */
 
 @Singleton

@@ -1,12 +1,9 @@
-package com.salah.amr.codingtaskapp;
+package com.salah.amr.codingtaskapp.main;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.salah.amr.codingtaskapp.model.OpenWeatherAPI;
-
-import javax.inject.Inject;
+import com.salah.amr.codingtaskapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
