@@ -8,11 +8,12 @@ import android.widget.TextView;
 
 import com.salah.amr.codingtaskapp.R;
 import com.salah.amr.codingtaskapp.model.LocalForecast;
-import com.salah.amr.codingtaskapp.model.LocalWeather;
 
-import org.w3c.dom.Text;
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -39,7 +40,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
     @Override
     public void onBindViewHolder(ForecastHolder holder, int position) {
         LocalForecast localForecast  = localForecasts.get(position);
-        holder.bindForecast(localForecast);
+        holder.bindForecast(localForecast , position);
     }
 
     @Override
@@ -49,18 +50,40 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
 
     public class ForecastHolder extends RecyclerView.ViewHolder{
 
-        TextView date , minTemp , maxTemp;
+        TextView dateTextView, minTemp , maxTemp;
 
         public ForecastHolder(View itemView) {
             super(itemView);
-            date = itemView.findViewById(R.id.item_forecast_date);
+            dateTextView = itemView.findViewById(R.id.item_forecast_date);
             minTemp =  itemView.findViewById(R.id.item_forecast_min_temp);
             maxTemp = itemView.findViewById(R.id.item_forecast_max_temp);
         }
 
-        public void bindForecast(LocalForecast localForecast){
-            minTemp.setText(String.valueOf(localForecast.getMinTemp()));
-            maxTemp.setText(String.valueOf(localForecast.getMaxTemp()));
+        public void bindForecast(LocalForecast localForecast , int position){
+
+            if(position == 0){
+                dateTextView.setText("Today");
+            }else if(position== 1){
+                dateTextView.setText("Tomorrow");
+            }
+            else {
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DAY_OF_MONTH,position);
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                Date date = new GregorianCalendar(year,month,day).getTime();
+                SimpleDateFormat df = new SimpleDateFormat("dd-MMM");
+                String formattedDate = df.format(date);
+                dateTextView.setText(formattedDate);
+            }
+
+            minTemp.setText(String.valueOf(Math.round(localForecast.getMinTemp())));
+            maxTemp.setText(String.valueOf(Math.round(localForecast.getMaxTemp())));
         }
+    }
+
+    public void setLocalForecasts(List<LocalForecast> localForecasts){
+        this.localForecasts = localForecasts;
     }
 }

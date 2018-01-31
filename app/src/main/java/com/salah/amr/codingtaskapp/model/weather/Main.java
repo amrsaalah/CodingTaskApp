@@ -28,17 +28,17 @@ public class Main {
         this.humidity = humdity;
     }
 
-    public int getMinTemp() {
-        return ((int) minTemp - 273);
+    public Double getMinTemp() {
+        return minTemp;
     }
 
     public void setMinTemp(double minTemp) {
         this.minTemp = minTemp;
     }
 
-    public int getMaxTemp() {
+    public Double getMaxTemp() {
 
-        return ((int) maxTemp - 273);
+       return maxTemp;
     }
 
     public void setMaxTemp(double maxTemp) {

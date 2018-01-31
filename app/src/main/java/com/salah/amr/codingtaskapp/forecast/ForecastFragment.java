@@ -3,6 +3,9 @@ package com.salah.amr.codingtaskapp.forecast;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +32,7 @@ public class ForecastFragment extends BaseFragment implements IForecast.view {
 
     ImageView backBtn;
     TextView cityName;
+    RecyclerView recyclerView;
 
     @Inject
     ForecastPresenter presenter;
@@ -45,11 +49,11 @@ public class ForecastFragment extends BaseFragment implements IForecast.view {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
         cityName.setText(city);
-
-        presenter.loadForecast();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        presenter.loadForecast(city);
 
         backBtn.setOnClickListener(view -> {
-            navigateToMainActivity();
+           getActivity().finish();
         });
 
         return v;
@@ -59,6 +63,7 @@ public class ForecastFragment extends BaseFragment implements IForecast.view {
     public void initWidgets(View v) {
         backBtn = v.findViewById(R.id.back_btn);
         cityName = v.findViewById(R.id.forecast_city);
+        recyclerView = v.findViewById(R.id.recyclerView);
     }
 
     @Override
@@ -82,6 +87,12 @@ public class ForecastFragment extends BaseFragment implements IForecast.view {
     @Override
     public void injectDependencies() {
         MyApp.getComponent().newControllerComponent(new ControllerModule(this)).inject(this);
+    }
+
+
+    @Override
+    public void showList(ForecastAdapter adapter) {
+        recyclerView.setAdapter(adapter);
     }
 
     public static ForecastFragment newInstance(String city){

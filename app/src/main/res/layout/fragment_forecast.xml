@@ -44,7 +44,7 @@
         android:padding="16dp"
         android:text="Roma"
         android:textColor="@color/black"
-        android:textSize="24sp" />
+        android:textSize="26sp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"

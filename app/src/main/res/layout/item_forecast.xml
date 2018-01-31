@@ -9,7 +9,7 @@
         android:id="@+id/item_forecast_date"
         android:text="Today"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="24sp"
         android:layout_centerVertical="true"
         />
 
@@ -25,7 +25,7 @@
             android:id="@+id/item_forecast_max_temp"
             android:text="25 C"
             android:textColor="@color/black"
-            android:textSize="26sp"
+            android:textSize="24sp"
             />
 
         <TextView

@@ -6,13 +6,17 @@ import com.salah.amr.codingtaskapp.base.BaseView;
 import com.salah.amr.codingtaskapp.model.LocalWeather;
 import com.salah.amr.codingtaskapp.model.OpenWeatherAPI;
 
+import org.reactivestreams.Subscription;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.FlowableSubscriber;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by Amr Salah on 1/31/2018.
@@ -49,7 +53,7 @@ public class MainPresenter implements IMain.presenter {
 
                 @Override
                 public void onSuccess(Double aDouble) {
-                    Log.d(TAG, "onSuccess: ");
+                    Log.d(TAG, "onSuccess: "+aDouble);
                     LocalWeather localWeather = new LocalWeather();
                     localWeather.setCity(cities[temp]);
                     localWeather.setCurrentTemp(aDouble);

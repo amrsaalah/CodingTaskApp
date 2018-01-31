@@ -12,6 +12,7 @@ import com.salah.amr.codingtaskapp.base.BaseListener;
 import com.salah.amr.codingtaskapp.model.LocalWeather;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -64,12 +65,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.WeatherHolder>
         }
 
         public void bindWeather(LocalWeather localWeather , OnItemClickListener onItemClickListener){
+
             Log.d(TAG, "bindWeather: "+localWeather);
             itemView.setOnClickListener(view -> {
                 onItemClickListener.onItemClick(localWeather.getCity());
             });
             city.setText(localWeather.getCity());
-            temp.setText(String.valueOf(localWeather.getCurrentTemp()));
+            temp.setText(String.valueOf(Math.round(localWeather.getCurrentTemp())));
         }
     }
 

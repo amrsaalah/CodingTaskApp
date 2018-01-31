@@ -8,10 +8,10 @@ import com.salah.amr.codingtaskapp.base.BaseView;
 
 public interface IForecast {
     interface view extends BaseView{
-
+        void showList(ForecastAdapter adapter);
     }
 
     interface presenter{
-        void loadForecast();
+        void loadForecast(String city);
     }
 }
