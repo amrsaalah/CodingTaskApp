@@ -5,6 +5,6 @@ package com.salah.amr.codingtaskapp.base;
  */
 
 public interface BaseView {
-
-
+    void navigateToForecastActivity();
+    void navigateToMainActivity();
 }

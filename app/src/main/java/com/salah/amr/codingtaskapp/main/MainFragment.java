@@ -1,5 +1,6 @@
 package com.salah.amr.codingtaskapp.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import com.salah.amr.codingtaskapp.MyApp;
 import com.salah.amr.codingtaskapp.R;
 import com.salah.amr.codingtaskapp.base.BaseFragment;
 import com.salah.amr.codingtaskapp.dagger.ControllerModule;
+import com.salah.amr.codingtaskapp.forecast.ForecastActivity;
 
 import javax.inject.Inject;
 
@@ -25,7 +27,8 @@ public class MainFragment extends BaseFragment implements IMain.view  , MainAdap
 
     @Override
     public void onItemClick(String city) {
-
+       Intent intent =  ForecastActivity.newIntent(getActivity() , city);
+        startActivity(intent);
     }
     RecyclerView recyclerView;
 
@@ -63,5 +66,16 @@ public class MainFragment extends BaseFragment implements IMain.view  , MainAdap
     }
 
 
+    @Override
+    public void navigateToForecastActivity() {
+        Intent intent = new Intent(getActivity() , ForecastActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void navigateToMainActivity() {
+        Intent intent = new Intent(getActivity() , MainActivity.class);
+        startActivity(intent);
+    }
 
 }

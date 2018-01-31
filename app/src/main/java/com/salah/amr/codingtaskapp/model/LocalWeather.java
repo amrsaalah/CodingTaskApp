@@ -9,7 +9,7 @@ import java.util.List;
 public class LocalWeather {
     String city;
     Double currentTemp;
-    List<Double> forecast;
+    List<LocalForecast> localForecasts;
 
     public String getCity() {
         return city;
@@ -27,12 +27,12 @@ public class LocalWeather {
         this.currentTemp = currentTemp;
     }
 
-    public List<Double> getForecast() {
-        return forecast;
+    public List<LocalForecast> getLocalForecasts() {
+        return localForecasts;
     }
 
-    public void setForecast(List<Double> forecast) {
-        this.forecast = forecast;
+    public void setLocalForecasts(List<LocalForecast> localForecasts) {
+        this.localForecasts = localForecasts;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class LocalWeather {
         return "LocalWeather{" +
                 "city='" + city + '\'' +
                 ", currentTemp=" + currentTemp +
-                ", forecast=" + forecast +
+                ", localForecasts=" + localForecasts +
                 '}';
     }
 }

@@ -1,5 +1,6 @@
 package com.salah.amr.codingtaskapp.dagger;
 
+import com.salah.amr.codingtaskapp.forecast.ForecastFragment;
 import com.salah.amr.codingtaskapp.main.MainFragment;
 import com.salah.amr.codingtaskapp.base.BaseFragment;
 
@@ -13,5 +14,5 @@ import dagger.Subcomponent;
 @ControllerScope
 public interface ControllerComponent {
      void inject(MainFragment target);
-     void inject(BaseFragment target);
+     void inject(ForecastFragment target);
 }

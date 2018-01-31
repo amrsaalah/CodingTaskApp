@@ -9,7 +9,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/item_city_name"
         android:textSize="20sp"
-        android:text="Roma"
         android:textColor="@color/black"/>
 
     <TextView
@@ -17,7 +16,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/item_city_temp"
         android:layout_alignParentRight="true"
-        android:text="25 C"
         android:layout_centerVertical="true"
         android:textColor="@color/black"
         android:textSize="20sp"/>
