@@ -41,11 +41,10 @@ public class ForecastPresenter implements IForecast.presenter {
     public void loadForecast(String city , boolean internet) {
 
         if(internet){
-            Log.d(TAG, "loadForecast: internet "+internet);
             openWeatherAPI.getForecast(city).subscribe(new SingleObserver<List<LocalForecast>>() {
                 @Override
                 public void onSubscribe(Disposable d) {
-                    Log.d(TAG, "onSubscribe: ");
+
                 }
 
                 @Override
@@ -59,7 +58,7 @@ public class ForecastPresenter implements IForecast.presenter {
 
                 @Override
                 public void onError(Throwable e) {
-                    Log.d(TAG, "onError: "+e.getMessage());
+
 
                     List<LocalForecast> localForecasts =   weatherDatabase.getLocalWeather(city).getLocalForecasts();
                     adapter.setLocalForecasts(localForecasts);
@@ -67,7 +66,7 @@ public class ForecastPresenter implements IForecast.presenter {
                 }
             });
         }else{
-            Log.d(TAG, "loadForecast: internet "+internet);
+
            List<LocalForecast> localForecasts =   weatherDatabase.getLocalWeather(city).getLocalForecasts();
             adapter.setLocalForecasts(localForecasts);
             view.showList(adapter);

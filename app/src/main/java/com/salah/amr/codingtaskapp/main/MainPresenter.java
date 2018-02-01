@@ -47,7 +47,6 @@ public class MainPresenter implements IMain.presenter {
     @Override
     public void initDatabase() {
         if(!preferences.getInitDatabase()){
-            Log.d(TAG, "initDatabase: ");
 
             String [] cities = {"Roma" , "Madrid" , "London" , "Moscow" , "Cairo"};
             for(int i = 0 ; i<cities.length ; i++){
@@ -61,23 +60,19 @@ public class MainPresenter implements IMain.presenter {
 
     @Override
     public void getCurrentTemp(Boolean internet) {
-        Log.d(TAG, "getCurrentTemp: "+internet);
 
-        Log.d(TAG, "getCurrentTemp: unit type "+preferences.getUnitsType());
-
-        Log.d(TAG, "getCurrentTemp: "+weatherDatabase.getLocalWeathers());
         if(internet){
             for (int i = 0; i <weatherDatabase.getLocalWeathers().size() ; i++) {
                 int temp = i;
                 openWeatherAPI.getCurrentWeather(weatherDatabase.getLocalWeathers().get(i).getCity()).subscribe(new SingleObserver<Double>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        Log.d(TAG, "onSubscribe: "+temp);
+
                     }
 
                     @Override
                     public void onSuccess(Double aDouble) {
-                        Log.d(TAG, "onSuccess: "+aDouble + " "+temp);
+
                         LocalWeather localWeather = weatherDatabase.getLocalWeathers().get(temp);
                         localWeather.setCurrentTemp(aDouble);
 
@@ -89,7 +84,7 @@ public class MainPresenter implements IMain.presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d(TAG, "onError: "+e.getMessage());
+
                         for(int i = 0 ; i<weatherDatabase.getLocalWeathers().size() ; i++){
                             mainAdapter.addWeather(weatherDatabase.getLocalWeathers().get(i));
                             view.showList(mainAdapter);
@@ -99,7 +94,6 @@ public class MainPresenter implements IMain.presenter {
             }
         }
         else{
-            Log.d(TAG, "getCurrentTemp: "+internet);
             for(int i = 0 ; i<weatherDatabase.getLocalWeathers().size() ; i++){
                 mainAdapter.addWeather(weatherDatabase.getLocalWeathers().get(i));
                 view.showList(mainAdapter);

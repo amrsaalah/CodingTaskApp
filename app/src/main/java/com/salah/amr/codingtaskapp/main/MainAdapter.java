@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.salah.amr.codingtaskapp.R;
 import com.salah.amr.codingtaskapp.base.BaseListener;
 import com.salah.amr.codingtaskapp.model.LocalWeather;
+import com.salah.amr.codingtaskapp.model.WeatherSharedPreferences;
+import com.salah.amr.codingtaskapp.utils.UnitsConverter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,10 +32,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.WeatherHolder>
 
     List<LocalWeather> localWeathers;
     private OnItemClickListener onItemClickListener;
+    private WeatherSharedPreferences preferences;
 
     @Inject
-    public MainAdapter(BaseListener baseListener) {
+    public MainAdapter(BaseListener baseListener , WeatherSharedPreferences preferences) {
         this.onItemClickListener = (OnItemClickListener) baseListener;
+        this.preferences = preferences;
         this.localWeathers = new ArrayList<>();
     }
 
@@ -70,8 +74,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.WeatherHolder>
             itemView.setOnClickListener(view -> {
                 onItemClickListener.onItemClick(localWeather.getCity());
             });
+
+            if(preferences.getUnitsType().equals("0")){
+                temp.setText(UnitsConverter.kelvinToCelsius(localWeather.getCurrentTemp()));
+            }else{
+                temp.setText(UnitsConverter.kelvinToFahrenheit(localWeather.getCurrentTemp()));
+            }
+
             city.setText(localWeather.getCity());
-            temp.setText(String.valueOf(Math.round(localWeather.getCurrentTemp())));
         }
     }
 
