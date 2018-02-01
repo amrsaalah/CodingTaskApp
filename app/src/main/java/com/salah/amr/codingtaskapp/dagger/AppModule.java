@@ -26,14 +26,14 @@ public class AppModule {
         this.application = application;
     }
 
-    /*@Provides
+    @Provides
     @Singleton
     public AppDatabase provideAppDatabase(Application application){
         return Room.databaseBuilder(application,
                 AppDatabase.class, "database-name")
                 .allowMainThreadQueries()
                 .build();
-    }*/
+    }
 
     @Provides
     @Singleton
@@ -50,10 +50,9 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public WeatherDatabase provideEmployeeDatabase(AppDatabase appDatabase){
+    public WeatherDatabase provideWeatherDatabase(AppDatabase appDatabase){
         return new WeatherDatabase(appDatabase);
     }
-
 
 }
 

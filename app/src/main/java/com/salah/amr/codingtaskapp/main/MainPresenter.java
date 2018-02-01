@@ -3,8 +3,10 @@ package com.salah.amr.codingtaskapp.main;
 import android.util.Log;
 
 import com.salah.amr.codingtaskapp.base.BaseView;
+import com.salah.amr.codingtaskapp.model.LocalForecast;
 import com.salah.amr.codingtaskapp.model.LocalWeather;
 import com.salah.amr.codingtaskapp.model.OpenWeatherAPI;
+import com.salah.amr.codingtaskapp.model.WeatherDatabase;
 
 import org.reactivestreams.Subscription;
 
@@ -29,35 +31,41 @@ public class MainPresenter implements IMain.presenter {
     private IMain.view view;
     private OpenWeatherAPI openWeatherAPI;
     private MainAdapter mainAdapter;
+    private WeatherDatabase weatherDatabase;
 
     @Inject
-    public MainPresenter(BaseView view, OpenWeatherAPI openWeatherAPI , MainAdapter mainAdapter) {
+    public MainPresenter(BaseView view, OpenWeatherAPI openWeatherAPI , MainAdapter mainAdapter , WeatherDatabase weatherDatabase) {
         this.view = (IMain.view) view;
         this.openWeatherAPI = openWeatherAPI;
         this.mainAdapter = mainAdapter;
+        this.weatherDatabase = weatherDatabase;
     }
 
 
     @Override
     public void getCurrentTemp() {
         Log.d(TAG, "getCurrentTemp: ");
+
+        Log.d(TAG, "getCurrentTemp: "+weatherDatabase.getLocalWeathers());
+
         List<LocalWeather> localWeatherList = new ArrayList<>();
-        String[] cities = {"roma" , "madrid" , "cairo" , "moscow" , "berlin"};
-        for (int i = 0; i <cities.length ; i++) {
+        for (int i = 0; i <weatherDatabase.getLocalWeathers().size() ; i++) {
             int temp = i;
-            openWeatherAPI.getCurrentWeather(cities[i]).subscribe(new SingleObserver<Double>() {
+            openWeatherAPI.getCurrentWeather(weatherDatabase.getLocalWeathers().get(i).getCity()).subscribe(new SingleObserver<Double>() {
                 @Override
                 public void onSubscribe(Disposable d) {
-                    Log.d(TAG, "onSubscribe: ");
+                    Log.d(TAG, "onSubscribe: "+temp);
                 }
 
                 @Override
                 public void onSuccess(Double aDouble) {
-                    Log.d(TAG, "onSuccess: "+aDouble);
-                    LocalWeather localWeather = new LocalWeather();
-                    localWeather.setCity(cities[temp]);
+                    Log.d(TAG, "onSuccess: "+aDouble + " "+temp);
+                    LocalWeather localWeather = weatherDatabase.getLocalWeathers().get(temp);
                     localWeather.setCurrentTemp(aDouble);
+
+                    weatherDatabase.updateLocalWeather(localWeather);
                     localWeatherList.add(localWeather);
+
                     mainAdapter.addWeather(localWeather);
                     view.showList(mainAdapter);
                 }

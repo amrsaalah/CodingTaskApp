@@ -54,10 +54,10 @@ public class OpenWeatherAPI {
                     for (int i = 0; i < weatherModel.getForecastList().length; i++) {
                         Log.d(TAG, "getForecast: " + weatherModel.getForecastList()[i].getMain().getMaxTemp());
                         if (i % 8 == 0) {
-                            LocalForecast localForecast = new LocalForecast();
-                            localForecast.setMaxTemp(weatherModel.getForecastList()[i].getMain().getMaxTemp());
-                            localForecast.setMinTemp(weatherModel.getForecastList()[i].getMain().getMinTemp());
-                            forecasts.add(localForecast);
+                           LocalForecast localForecast = new LocalForecast();
+                           localForecast.setMinTemp(weatherModel.getForecastList()[i].getMain().getMinTemp());
+                           localForecast.setMaxTemp(weatherModel.getForecastList()[i].getMain().getMaxTemp());
+                           forecasts.add(localForecast);
                         }
                     }
                     return Single.just(forecasts);

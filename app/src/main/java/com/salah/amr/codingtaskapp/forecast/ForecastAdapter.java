@@ -78,7 +78,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
                 dateTextView.setText(formattedDate);
             }
 
-            minTemp.setText(String.valueOf(Math.round(localForecast.getMinTemp())));
+           minTemp.setText(String.valueOf(Math.round(localForecast.getMinTemp())));
             maxTemp.setText(String.valueOf(Math.round(localForecast.getMaxTemp())));
         }
     }
