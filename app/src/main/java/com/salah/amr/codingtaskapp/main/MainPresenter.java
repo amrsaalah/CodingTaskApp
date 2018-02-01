@@ -63,6 +63,8 @@ public class MainPresenter implements IMain.presenter {
     public void getCurrentTemp(Boolean internet) {
         Log.d(TAG, "getCurrentTemp: "+internet);
 
+        Log.d(TAG, "getCurrentTemp: unit type "+preferences.getUnitsType());
+
         Log.d(TAG, "getCurrentTemp: "+weatherDatabase.getLocalWeathers());
         if(internet){
             for (int i = 0; i <weatherDatabase.getLocalWeathers().size() ; i++) {

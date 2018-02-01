@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main.MainActivity"
+        <activity
+            android:name=".main.MainActivity"
             android:label="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +23,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".forecast.ForecastActivity" />
-        <activity android:name=".ContactUs"></activity>
+        <activity android:name=".ContactUs" />
+        <activity android:name=".settings.SettingsActivity"></activity>
     </application>
 
 </manifest>

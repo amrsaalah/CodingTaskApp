@@ -23,6 +23,7 @@ import com.salah.amr.codingtaskapp.R;
 import com.salah.amr.codingtaskapp.base.BaseFragment;
 import com.salah.amr.codingtaskapp.dagger.ControllerModule;
 import com.salah.amr.codingtaskapp.forecast.ForecastActivity;
+import com.salah.amr.codingtaskapp.settings.SettingsActivity;
 import com.salah.amr.codingtaskapp.utils.CheckInternetHelper;
 
 import javax.inject.Inject;
@@ -77,11 +78,12 @@ public class MainFragment extends BaseFragment implements IMain.view  , MainAdap
         Log.d(TAG, "onOptionsItemSelected: ");
         switch (item.getItemId()) {
             case R.id.item_menu_settings:
-
+                Intent intent1 = new Intent(getActivity() , SettingsActivity.class);
+                startActivity(intent1);
                 return true;
             case R.id.item_menu_contactUs:
-              Intent intent = new Intent(getActivity() , ContactUs.class);
-              startActivity(intent);
+              Intent intent2 = new Intent(getActivity() , ContactUs.class);
+              startActivity(intent2);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
