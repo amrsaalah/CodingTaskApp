@@ -32,9 +32,9 @@ public class OpenWeatherAPI {
         this.feedAPI = feedAPI;
     }
 
-    public Single<Double> getCurrentWeather(String name) {
+    public Single<Double> getCurrentWeather(String city) {
         Log.d(TAG, "getCurrentWeather: ");
-        return feedAPI.getCurrentWeatherByName(name)
+        return feedAPI.getCurrentWeatherByName(city)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(weatherModel -> {
@@ -53,10 +53,10 @@ public class OpenWeatherAPI {
                     List<LocalForecast> forecasts = new ArrayList<>();
                     for (int i = 0; i < weatherModel.getForecastList().length; i++) {
                         if (i % 8 == 0) {
-                           LocalForecast localForecast = new LocalForecast();
-                           localForecast.setMinTemp(weatherModel.getForecastList()[i].getMain().getMinTemp());
-                           localForecast.setMaxTemp(weatherModel.getForecastList()[i].getMain().getMaxTemp());
-                           forecasts.add(localForecast);
+                            LocalForecast localForecast = new LocalForecast();
+                            localForecast.setMinTemp(weatherModel.getForecastList()[i].getMain().getMinTemp());
+                            localForecast.setMaxTemp(weatherModel.getForecastList()[i].getMain().getMaxTemp());
+                            forecasts.add(localForecast);
                         }
                     }
                     return Single.just(forecasts);

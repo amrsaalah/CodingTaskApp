@@ -34,7 +34,8 @@
             android:id="@+id/item_forecast_min_temp"
             android:text="20 C"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="18sp"
+            android:layout_gravity="center"
             />
 
     </LinearLayout>

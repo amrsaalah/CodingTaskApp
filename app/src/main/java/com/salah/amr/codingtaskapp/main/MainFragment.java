@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.salah.amr.codingtaskapp.ContactUs;
 import com.salah.amr.codingtaskapp.MyApp;
@@ -43,6 +47,9 @@ public class MainFragment extends BaseFragment implements IMain.view  , MainAdap
     }
     RecyclerView recyclerView;
     Toolbar toolbar;
+    TextView toolbarTitle;
+
+    SearchView searchView;
 
     @Inject
     MainPresenter presenter;
@@ -58,10 +65,15 @@ public class MainFragment extends BaseFragment implements IMain.view  , MainAdap
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = super.onCreateView(inflater , container , savedInstanceState);
+
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.weather_app);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         presenter.initDatabase();
+
         presenter.getCurrentTemp(CheckInternetHelper.isNetworkAvailable(getActivity()));
+
 
         return v;
     }
@@ -71,6 +83,25 @@ public class MainFragment extends BaseFragment implements IMain.view  , MainAdap
         Log.d(TAG, "onCreateOptionsMenu: ");
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_main, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.menu_item_search);
+        searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d(TAG, "onQueryTextSubmit: ");
+                presenter.addCity(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.d(TAG, "onQueryTextChange: ");
+
+                return false;
+            }
+        });
+
     }
 
     @Override
@@ -99,6 +130,7 @@ public class MainFragment extends BaseFragment implements IMain.view  , MainAdap
     public void initWidgets(View v) {
         toolbar = v.findViewById(R.id.toolbar);
         recyclerView = v.findViewById(R.id.recyclerView);
+        toolbarTitle = v.findViewById(R.id.toolbar_title);
     }
 
     @Override
@@ -109,6 +141,11 @@ public class MainFragment extends BaseFragment implements IMain.view  , MainAdap
     @Override
     public void showList(MainAdapter adapter) {
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void showError() {
+        Toast.makeText(getActivity() , "No city found" , Toast.LENGTH_LONG).show();
     }
 
 
