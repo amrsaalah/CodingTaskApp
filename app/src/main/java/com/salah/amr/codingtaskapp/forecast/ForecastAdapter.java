@@ -65,6 +65,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
 
         public void bindForecast(LocalForecast localForecast, int position) {
 
+
             if (position == 0) {
                 dateTextView.setText("Today");
             } else if (position == 1) {
@@ -80,6 +81,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
                 String formattedDate = df.format(date);
                 dateTextView.setText(formattedDate);
             }
+
             if (preferences.getUnitsType().equals("0")) {
                 minTemp.setText(UnitsConverter.kelvinToCelsius(localForecast.getMinTemp()));
                 maxTemp.setText(UnitsConverter.kelvinToCelsius(localForecast.getMaxTemp()));

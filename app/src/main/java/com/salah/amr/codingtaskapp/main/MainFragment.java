@@ -127,6 +127,7 @@ public class MainFragment extends BaseFragment implements IMain.view  , MainAdap
               startActivity(intent2);
                 return true;
             case R.id.item_menu_refresh:
+                presenter.updateWidget();
                 navigateToMainActivity();
                 return true;
             default:

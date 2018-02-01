@@ -85,7 +85,6 @@ public class MainPresenter implements IMain.presenter {
     @Override
     public void updateWidget() {
         String city = preferences.getWidgetCity();
-
         openWeatherAPI.getCurrentWeather(city).subscribe(new SingleObserver<Double>() {
             @Override
             public void onSubscribe(Disposable d) {

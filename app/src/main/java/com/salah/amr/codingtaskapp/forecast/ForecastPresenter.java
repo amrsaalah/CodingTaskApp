@@ -68,8 +68,10 @@ public class ForecastPresenter implements IForecast.presenter {
         }else{
 
            List<LocalForecast> localForecasts =   weatherDatabase.getLocalWeather(city).getLocalForecasts();
-            adapter.setLocalForecasts(localForecasts);
-            view.showList(adapter);
+           if(localForecasts != null){
+               adapter.setLocalForecasts(localForecasts);
+               view.showList(adapter);
+           }
         }
 
     }
