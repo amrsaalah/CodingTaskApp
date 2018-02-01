@@ -5,13 +5,19 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.salah.amr.codingtaskapp.ContactUs;
 import com.salah.amr.codingtaskapp.MyApp;
 import com.salah.amr.codingtaskapp.R;
 import com.salah.amr.codingtaskapp.base.BaseFragment;
@@ -35,19 +41,51 @@ public class MainFragment extends BaseFragment implements IMain.view  , MainAdap
         startActivity(intent);
     }
     RecyclerView recyclerView;
+    Toolbar toolbar;
 
     @Inject
     MainPresenter presenter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: ");
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = super.onCreateView(inflater , container , savedInstanceState);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        presenter.initDatabase();
         presenter.getCurrentTemp(CheckInternetHelper.isNetworkAvailable(getActivity()));
 
         return v;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        Log.d(TAG, "onCreateOptionsMenu: ");
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "onOptionsItemSelected: ");
+        switch (item.getItemId()) {
+            case R.id.item_menu_settings:
+
+                return true;
+            case R.id.item_menu_contactUs:
+              Intent intent = new Intent(getActivity() , ContactUs.class);
+              startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -57,6 +95,7 @@ public class MainFragment extends BaseFragment implements IMain.view  , MainAdap
 
     @Override
     public void initWidgets(View v) {
+        toolbar = v.findViewById(R.id.toolbar);
         recyclerView = v.findViewById(R.id.recyclerView);
     }
 

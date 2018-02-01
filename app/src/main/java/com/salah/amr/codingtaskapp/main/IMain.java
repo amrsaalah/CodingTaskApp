@@ -9,9 +9,11 @@ import com.salah.amr.codingtaskapp.base.BaseView;
 public interface IMain {
     interface view extends BaseView{
         void showList(MainAdapter adapter);
+
     }
 
     interface presenter{
         void getCurrentTemp(Boolean internetAvailable);
+        void initDatabase();
     }
 }

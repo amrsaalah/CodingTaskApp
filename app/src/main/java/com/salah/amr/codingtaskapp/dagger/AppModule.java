@@ -43,7 +43,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public WeatherSharedPreferences provideEmployeeSharedPreferences(Application application){
+    public WeatherSharedPreferences provideWeatherSharedPreferences(Application application){
         return new WeatherSharedPreferences(application);
     }
 

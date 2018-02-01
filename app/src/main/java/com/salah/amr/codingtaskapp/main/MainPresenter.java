@@ -7,6 +7,7 @@ import com.salah.amr.codingtaskapp.model.LocalForecast;
 import com.salah.amr.codingtaskapp.model.LocalWeather;
 import com.salah.amr.codingtaskapp.model.OpenWeatherAPI;
 import com.salah.amr.codingtaskapp.model.WeatherDatabase;
+import com.salah.amr.codingtaskapp.model.WeatherSharedPreferences;
 
 import org.reactivestreams.Subscription;
 
@@ -32,15 +33,31 @@ public class MainPresenter implements IMain.presenter {
     private OpenWeatherAPI openWeatherAPI;
     private MainAdapter mainAdapter;
     private WeatherDatabase weatherDatabase;
+    private WeatherSharedPreferences preferences;
 
     @Inject
-    public MainPresenter(BaseView view, OpenWeatherAPI openWeatherAPI , MainAdapter mainAdapter , WeatherDatabase weatherDatabase) {
+    public MainPresenter(BaseView view, OpenWeatherAPI openWeatherAPI , MainAdapter mainAdapter , WeatherDatabase weatherDatabase , WeatherSharedPreferences preferences) {
         this.view = (IMain.view) view;
         this.openWeatherAPI = openWeatherAPI;
         this.mainAdapter = mainAdapter;
         this.weatherDatabase = weatherDatabase;
+        this.preferences = preferences;
     }
 
+    @Override
+    public void initDatabase() {
+        if(!preferences.getInitDatabase()){
+            Log.d(TAG, "initDatabase: ");
+
+            String [] cities = {"Roma" , "Madrid" , "London" , "Moscow" , "Cairo"};
+            for(int i = 0 ; i<cities.length ; i++){
+                LocalWeather localWeather = new LocalWeather();
+                localWeather.setCity(cities[i]);
+                weatherDatabase.addLocalWeather(localWeather);
+            }
+            preferences.setInitDatabase(true);
+        }
+    }
 
     @Override
     public void getCurrentTemp(Boolean internet) {
@@ -86,7 +103,6 @@ public class MainPresenter implements IMain.presenter {
                 view.showList(mainAdapter);
             }
         }
-
 
     }
 }
