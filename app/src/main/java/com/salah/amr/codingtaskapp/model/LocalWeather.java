@@ -6,7 +6,7 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
 
-import com.salah.amr.codingtaskapp.Converters;
+import com.salah.amr.codingtaskapp.utils.Converters;
 
 import java.util.List;
 

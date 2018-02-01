@@ -12,6 +12,6 @@ public interface IForecast {
     }
 
     interface presenter{
-        void loadForecast(String city);
+        void loadForecast(String city , boolean internet);
     }
 }

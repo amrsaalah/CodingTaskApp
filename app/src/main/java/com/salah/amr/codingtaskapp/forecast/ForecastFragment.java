@@ -18,6 +18,7 @@ import com.salah.amr.codingtaskapp.R;
 import com.salah.amr.codingtaskapp.base.BaseFragment;
 import com.salah.amr.codingtaskapp.dagger.ControllerModule;
 import com.salah.amr.codingtaskapp.main.MainActivity;
+import com.salah.amr.codingtaskapp.utils.CheckInternetHelper;
 
 import javax.inject.Inject;
 
@@ -50,7 +51,7 @@ public class ForecastFragment extends BaseFragment implements IForecast.view {
         View v = super.onCreateView(inflater, container, savedInstanceState);
         cityName.setText(city);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        presenter.loadForecast(city);
+        presenter.loadForecast(city , CheckInternetHelper.isNetworkAvailable(getActivity()));
 
         backBtn.setOnClickListener(view -> {
            getActivity().finish();

@@ -43,39 +43,50 @@ public class MainPresenter implements IMain.presenter {
 
 
     @Override
-    public void getCurrentTemp() {
-        Log.d(TAG, "getCurrentTemp: ");
+    public void getCurrentTemp(Boolean internet) {
+        Log.d(TAG, "getCurrentTemp: "+internet);
 
         Log.d(TAG, "getCurrentTemp: "+weatherDatabase.getLocalWeathers());
+        if(internet){
+            for (int i = 0; i <weatherDatabase.getLocalWeathers().size() ; i++) {
+                int temp = i;
+                openWeatherAPI.getCurrentWeather(weatherDatabase.getLocalWeathers().get(i).getCity()).subscribe(new SingleObserver<Double>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.d(TAG, "onSubscribe: "+temp);
+                    }
 
-        List<LocalWeather> localWeatherList = new ArrayList<>();
-        for (int i = 0; i <weatherDatabase.getLocalWeathers().size() ; i++) {
-            int temp = i;
-            openWeatherAPI.getCurrentWeather(weatherDatabase.getLocalWeathers().get(i).getCity()).subscribe(new SingleObserver<Double>() {
-                @Override
-                public void onSubscribe(Disposable d) {
-                    Log.d(TAG, "onSubscribe: "+temp);
-                }
+                    @Override
+                    public void onSuccess(Double aDouble) {
+                        Log.d(TAG, "onSuccess: "+aDouble + " "+temp);
+                        LocalWeather localWeather = weatherDatabase.getLocalWeathers().get(temp);
+                        localWeather.setCurrentTemp(aDouble);
 
-                @Override
-                public void onSuccess(Double aDouble) {
-                    Log.d(TAG, "onSuccess: "+aDouble + " "+temp);
-                    LocalWeather localWeather = weatherDatabase.getLocalWeathers().get(temp);
-                    localWeather.setCurrentTemp(aDouble);
+                        weatherDatabase.updateLocalWeather(localWeather);
 
-                    weatherDatabase.updateLocalWeather(localWeather);
-                    localWeatherList.add(localWeather);
+                        mainAdapter.addWeather(localWeather);
+                        view.showList(mainAdapter);
+                    }
 
-                    mainAdapter.addWeather(localWeather);
-                    view.showList(mainAdapter);
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                    Log.d(TAG, "onError: "+e.getMessage());
-                }
-            });
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError: "+e.getMessage());
+                        for(int i = 0 ; i<weatherDatabase.getLocalWeathers().size() ; i++){
+                            mainAdapter.addWeather(weatherDatabase.getLocalWeathers().get(i));
+                            view.showList(mainAdapter);
+                        }
+                    }
+                });
+            }
         }
+        else{
+            Log.d(TAG, "getCurrentTemp: "+internet);
+            for(int i = 0 ; i<weatherDatabase.getLocalWeathers().size() ; i++){
+                mainAdapter.addWeather(weatherDatabase.getLocalWeathers().get(i));
+                view.showList(mainAdapter);
+            }
+        }
+
 
     }
 }

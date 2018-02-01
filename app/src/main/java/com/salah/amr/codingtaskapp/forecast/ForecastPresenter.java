@@ -8,6 +8,7 @@ import com.salah.amr.codingtaskapp.model.LocalWeather;
 import com.salah.amr.codingtaskapp.model.OpenWeatherAPI;
 import com.salah.amr.codingtaskapp.model.WeatherDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -37,29 +38,40 @@ public class ForecastPresenter implements IForecast.presenter {
     }
 
     @Override
-    public void loadForecast(String city) {
+    public void loadForecast(String city , boolean internet) {
 
-        Log.d(TAG, "loadForecast: "+weatherDatabase.getLocalWeathers());
+        if(internet){
+            Log.d(TAG, "loadForecast: internet "+internet);
+            openWeatherAPI.getForecast(city).subscribe(new SingleObserver<List<LocalForecast>>() {
+                @Override
+                public void onSubscribe(Disposable d) {
+                    Log.d(TAG, "onSubscribe: ");
+                }
 
-        openWeatherAPI.getForecast(city).subscribe(new SingleObserver<List<LocalForecast>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
+                @Override
+                public void onSuccess(List<LocalForecast> localForecasts) {
+                    adapter.setLocalForecasts(localForecasts);
+                    LocalWeather localWeather = weatherDatabase.getLocalWeather(city);
+                    localWeather.setLocalForecasts(localForecasts);
+                    weatherDatabase.updateLocalWeather(localWeather);
+                    view.showList(adapter);
+                }
 
-            }
+                @Override
+                public void onError(Throwable e) {
+                    Log.d(TAG, "onError: "+e.getMessage());
 
-            @Override
-            public void onSuccess(List<LocalForecast> localForecasts) {
-                adapter.setLocalForecasts(localForecasts);
-                LocalWeather localWeather = weatherDatabase.getLocalWeather(city);
-                localWeather.setLocalForecasts(localForecasts);
-                weatherDatabase.updateLocalWeather(localWeather);
-                view.showList(adapter);
-            }
+                    List<LocalForecast> localForecasts =   weatherDatabase.getLocalWeather(city).getLocalForecasts();
+                    adapter.setLocalForecasts(localForecasts);
+                    view.showList(adapter);
+                }
+            });
+        }else{
+            Log.d(TAG, "loadForecast: internet "+internet);
+           List<LocalForecast> localForecasts =   weatherDatabase.getLocalWeather(city).getLocalForecasts();
+            adapter.setLocalForecasts(localForecasts);
+            view.showList(adapter);
+        }
 
-            @Override
-            public void onError(Throwable e) {
-
-            }
-        });
     }
 }

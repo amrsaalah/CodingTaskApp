@@ -1,15 +1,5 @@
 package com.salah.amr.codingtaskapp.model;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverters;
-import android.support.annotation.NonNull;
-
-import com.salah.amr.codingtaskapp.Converters;
-
-import java.util.List;
-
 /**
  * Created by Amr Salah on 1/31/2018.
  */

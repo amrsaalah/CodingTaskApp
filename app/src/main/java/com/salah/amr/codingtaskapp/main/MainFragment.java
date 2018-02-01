@@ -1,10 +1,13 @@
 package com.salah.amr.codingtaskapp.main;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,7 @@ import com.salah.amr.codingtaskapp.R;
 import com.salah.amr.codingtaskapp.base.BaseFragment;
 import com.salah.amr.codingtaskapp.dagger.ControllerModule;
 import com.salah.amr.codingtaskapp.forecast.ForecastActivity;
+import com.salah.amr.codingtaskapp.utils.CheckInternetHelper;
 
 import javax.inject.Inject;
 
@@ -40,7 +44,8 @@ public class MainFragment extends BaseFragment implements IMain.view  , MainAdap
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = super.onCreateView(inflater , container , savedInstanceState);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        presenter.getCurrentTemp();
+
+        presenter.getCurrentTemp(CheckInternetHelper.isNetworkAvailable(getActivity()));
 
         return v;
     }
@@ -77,5 +82,7 @@ public class MainFragment extends BaseFragment implements IMain.view  , MainAdap
         Intent intent = new Intent(getActivity() , MainActivity.class);
         startActivity(intent);
     }
+
+
 
 }

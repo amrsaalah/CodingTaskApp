@@ -1,4 +1,4 @@
-package com.salah.amr.codingtaskapp;
+package com.salah.amr.codingtaskapp.utils;
 
 import android.arch.persistence.room.TypeConverter;
 
@@ -17,26 +17,26 @@ import java.util.List;
 
 public class Converters {
     @TypeConverter
-    public String fromCountryLangList(List<LocalForecast> countryLang) {
-        if (countryLang == null) {
+    public String fromCountryLangList(List<LocalForecast> localForecasts) {
+        if (localForecasts == null) {
             return (null);
         }
         Gson gson = new Gson();
         Type type = new TypeToken<List<LocalForecast>>() {
         }.getType();
-        String json = gson.toJson(countryLang, type);
+        String json = gson.toJson(localForecasts, type);
         return json;
     }
 
     @TypeConverter
-    public List<LocalForecast> toCountryLangList(String countryLangString) {
-        if (countryLangString == null) {
+    public List<LocalForecast> toCountryLangList(String value) {
+        if (value == null) {
             return (null);
         }
         Gson gson = new Gson();
         Type type = new TypeToken<List<LocalForecast>>() {
         }.getType();
-        List<LocalForecast> countryLangList = gson.fromJson(countryLangString, type);
+        List<LocalForecast> countryLangList = gson.fromJson(value, type);
         return countryLangList;
     }
 }

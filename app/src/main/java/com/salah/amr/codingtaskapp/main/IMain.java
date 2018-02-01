@@ -12,6 +12,6 @@ public interface IMain {
     }
 
     interface presenter{
-        void getCurrentTemp();
+        void getCurrentTemp(Boolean internetAvailable);
     }
 }
