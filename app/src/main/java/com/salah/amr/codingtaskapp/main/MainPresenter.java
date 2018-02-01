@@ -8,6 +8,7 @@ import com.salah.amr.codingtaskapp.model.LocalWeather;
 import com.salah.amr.codingtaskapp.model.OpenWeatherAPI;
 import com.salah.amr.codingtaskapp.model.WeatherDatabase;
 import com.salah.amr.codingtaskapp.model.WeatherSharedPreferences;
+import com.salah.amr.codingtaskapp.utils.UnitsConverter;
 
 import org.reactivestreams.Subscription;
 
@@ -82,8 +83,33 @@ public class MainPresenter implements IMain.presenter {
     }
 
     @Override
-    public void getCurrentTemp(Boolean internet) {
+    public void updateWidget() {
+        String city = preferences.getWidgetCity();
 
+        openWeatherAPI.getCurrentWeather(city).subscribe(new SingleObserver<Double>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+            @Override
+            public void onSuccess(Double aDouble) {
+                if(preferences.getUnitsType().equals("0")){
+                    preferences.setWidgetTemp(UnitsConverter.kelvinToCelsius(aDouble));
+                }else {
+                    preferences.setWidgetTemp(UnitsConverter.kelvinToFahrenheit(aDouble));
+                }
+                view.sendBroadcastToWidget();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
+    }
+
+    @Override
+    public void getCurrentTemp(Boolean internet) {
         if (internet) {
             for (int i = 0; i < weatherDatabase.getLocalWeathers().size(); i++) {
                 int temp = i;

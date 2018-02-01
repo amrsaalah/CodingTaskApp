@@ -14,5 +14,6 @@ import dagger.Component;
 public interface AppComponent {
 
     ControllerComponent newControllerComponent(ControllerModule module);
+    WidgetComponent newWidgetComponent(WidgetModule module);
     void inject(MyApp target);
 }

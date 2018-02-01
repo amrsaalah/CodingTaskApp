@@ -14,7 +14,11 @@
     <item android:title="Contact Us"
         android:id="@+id/item_menu_contactUs"
         app:showAsAction="never">
+    </item>
 
+    <item android:title="Refresh"
+        android:id="@+id/item_menu_refresh"
+        app:showAsAction="never">
     </item>
 
     <item android:id="@+id/menu_item_search"

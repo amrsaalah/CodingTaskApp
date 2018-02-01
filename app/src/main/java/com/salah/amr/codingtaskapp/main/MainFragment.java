@@ -1,5 +1,7 @@
 package com.salah.amr.codingtaskapp.main;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -18,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,8 +30,11 @@ import com.salah.amr.codingtaskapp.R;
 import com.salah.amr.codingtaskapp.base.BaseFragment;
 import com.salah.amr.codingtaskapp.dagger.ControllerModule;
 import com.salah.amr.codingtaskapp.forecast.ForecastActivity;
+import com.salah.amr.codingtaskapp.model.WeatherSharedPreferences;
 import com.salah.amr.codingtaskapp.settings.SettingsActivity;
 import com.salah.amr.codingtaskapp.utils.CheckInternetHelper;
+import com.salah.amr.codingtaskapp.widget.NewAppWidget;
+import com.salah.amr.codingtaskapp.widget.NewAppWidgetConfigureActivity;
 
 import javax.inject.Inject;
 
@@ -54,6 +60,9 @@ public class MainFragment extends BaseFragment implements IMain.view  , MainAdap
     @Inject
     MainPresenter presenter;
 
+    @Inject
+    WeatherSharedPreferences preferences;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: ");
@@ -74,6 +83,7 @@ public class MainFragment extends BaseFragment implements IMain.view  , MainAdap
 
         presenter.getCurrentTemp(CheckInternetHelper.isNetworkAvailable(getActivity()));
 
+        presenter.updateWidget();
 
         return v;
     }
@@ -116,6 +126,9 @@ public class MainFragment extends BaseFragment implements IMain.view  , MainAdap
               Intent intent2 = new Intent(getActivity() , ContactUs.class);
               startActivity(intent2);
                 return true;
+            case R.id.item_menu_refresh:
+                navigateToMainActivity();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -146,6 +159,15 @@ public class MainFragment extends BaseFragment implements IMain.view  , MainAdap
     @Override
     public void showError() {
         Toast.makeText(getActivity() , "No city found" , Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void sendBroadcastToWidget() {
+        Intent intent = new Intent(getActivity(), NewAppWidget.class);
+        intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
+        int ids[] = AppWidgetManager.getInstance(getActivity().getApplication()).getAppWidgetIds(new ComponentName(getActivity().getApplication(), NewAppWidget.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+        getActivity().sendBroadcast(intent);
     }
 
 

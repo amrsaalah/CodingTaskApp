@@ -10,11 +10,13 @@ public interface IMain {
     interface view extends BaseView{
         void showList(MainAdapter adapter);
         void showError();
+        void sendBroadcastToWidget();
     }
 
     interface presenter{
         void getCurrentTemp(Boolean internetAvailable);
         void initDatabase();
         void addCity(String city);
+        void updateWidget();
     }
 }
